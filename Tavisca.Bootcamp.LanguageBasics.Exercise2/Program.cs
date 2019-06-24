@@ -24,6 +24,113 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
         public static string GetCurrentTime(string[] exactPostTime, string[] showPostTime)
         {
             // Add your code here.
+
+	    int finalhr=0,finalmin=0,finalsec=0;
+           
+            int l1=exactPostTime.Length;
+            for(int i=0;i<l1;i++)
+            {
+                for(int j=i+1;j<l1;j++)
+                {
+                    if(exactPostTime[i]==exactPostTime[j])
+                    {
+                        if(!string.Equals(showPostTime[i],showPostTime[j]))
+                        {
+                            return "impossible";
+                        }
+                    }
+                }
+            }
+            string[] temp=new string[l1];
+            for(int i=0;i<l1;i++)
+            { string s1,s2,s3;
+                string[] t=exactPostTime[i].Split(':');
+                string[] s=showPostTime[i].Split(' ');
+                finalhr=int.Parse(t[0]);
+                finalmin=int.Parse(t[1]);
+                finalsec=int.Parse(t[2]);
+                s3=finalsec.ToString();
+
+              if(showPostTime[i].Contains("minutes"))
+              {
+                  
+                  int mins=int.Parse(s[0]);
+                  finalmin=finalmin+mins;
+                  if(finalmin>59)
+                  {finalmin=finalmin-60;
+                   if(finalmin==0)
+                   {
+                       s2="00";
+			//explicitly set 0 to 00
+                   }
+                   else
+                   {
+                        s2=finalmin.ToString();
+                   }
+                  
+                   finalhr++;
+                   if(finalhr>23)
+                   {
+                       finalhr=finalhr-24;
+                       if(finalhr==0)
+                       {
+                           s1="00";
+                       }
+                       else
+                       {
+                           s1=finalhr.ToString();
+                       }
+                   }
+                   else
+                   {
+                        s1=finalhr.ToString();
+                   }
+                   
+                   }
+                   else
+                   {
+                       s2=finalmin.ToString();
+                       s1=finalhr.ToString();
+                   }
+                
+              }
+              else if(showPostTime[i].Contains("hours"))
+              {  s2=finalmin.ToString();
+                 int hrs=int.Parse(s[0]);
+                 finalhr=finalhr+hrs;
+                 if(finalhr>23)
+                 { 
+                     finalhr=finalhr-24;
+                     if(finalhr==0)
+                       {
+                           s1="00";
+                       }
+                       else
+                       {
+                           s1=finalhr.ToString();
+                       }
+                 }
+                 else
+                 {
+                     s1=finalhr.ToString();
+                 }
+                 
+              }
+              else
+              {
+                 s1=finalhr.ToString();
+                 s2=finalmin.ToString();
+              }
+             
+                temp[i]=s1+":"+s2+":"+s3;
+
+
+            }
+            Array.Sort(temp);
+            Console.WriteLine(temp[l1-1]);
+            return temp[l1-1];
+            
+
             throw new NotImplementedException();
         }
     }
